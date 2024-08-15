@@ -4,13 +4,14 @@ public class Main {
     public static void main(String[] args) {
         System.out.println(DecodeFormat("CYRQ 242352Z AUTO 14010G200KT 060V160 1 1/2SM +RA VCTS BR FEW024 BKN029 OVC060 20/20 A3001"));
     }
-
+    static boolean NA_FLAG;
 
     public static String DecodeFormat(String format) {
         String GENERAL_INFO_NONFORMAT = "This is the weather report for airport %s, sent out at %s UTC on the %s day of the month. This is a(n) %s message.\n";
         String[] tokens = format.split(" ");
         // airport code
         String airport = tokens[0];
+        NA_FLAG = airport.startsWith("K");
         // timestamp, get day of month and time UTC
         String timestamp = tokens[1];
         String day = timestamp.substring(0, 2);
@@ -111,7 +112,6 @@ public class Main {
             String[] tokens = token1.split("V");
             return "Wind Variance: From " + tokens[0] + " degrees to " + tokens[1] + " degrees.\n";
         }
-        // next is visibility
         
         return new String();
     }
